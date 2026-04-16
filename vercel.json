@@ -1,0 +1,7 @@
+﻿{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/dental", "destination": "/dental.html" },
+    { "source": "/roofing", "destination": "/index.html" }
+  ]
+}

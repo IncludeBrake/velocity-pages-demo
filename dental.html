@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Dental — Modern Dentistry in Austin, TX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #fafaf9;
+    --off: #f3f2ef;
+    --ink: #111110;
+    --mid: #555552;
+    --light: #9a9894;
+    --accent: #1a6b5a;
+    --accent-light: rgba(26,107,90,0.08);
+    --accent-mid: rgba(26,107,90,0.2);
+    --spring: cubic-bezier(0.34,1.56,0.64,1);
+    --ease-out: cubic-bezier(0.16,1,0.3,1);
+    --border: rgba(17,17,16,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ——— NAV ——— */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 5vw;
+    transition: all 0.4s var(--ease-out);
+  }
+  nav.scrolled {
+    background: rgba(250,250,249,0.88);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 5vw;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-size: 0.88rem;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 10px 22px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 200ms var(--spring), background 200ms ease;
+  }
+  .nav-cta:hover {
+    transform: scale(1.04) translateY(-2px);
+    background: var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+  }
+
+  /* ——— HERO ——— */
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0;
+    padding-top: 80px;
+    overflow: hidden;
+  }
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 100px; }
+    .hero-visual { display: none; }
+  }
+
+  .hero-text {
+    padding: 60px 5vw 60px 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .hero-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-light);
+    border: 1px solid var(--accent-mid);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: enter-up 0.6s var(--ease-out) 0.1s forwards;
+  }
+  .chip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  h1.hero-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(44px, 5vw, 76px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.0;
+    color: var(--ink);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: enter-scale 0.8s var(--ease-out) 0.2s forwards;
+  }
+  h1.hero-headline em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--mid);
+    max-width: 420px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: enter-up 0.7s var(--ease-out) 0.35s forwards;
+  }
+
+  .hero-actions {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0;
+    animation: enter-up 0.7s var(--ease-out) 0.5s forwards;
+    margin-bottom: 48px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 15px 30px;
+    border-radius: 100px;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 200ms var(--spring), box-shadow 200ms ease;
+    box-shadow: 0 4px 20px rgba(26,107,90,0.25);
+  }
+  .btn-primary:hover {
+    transform: scale(1.04) translateY(-3px);
+    box-shadow: 0 10px 28px rgba(26,107,90,0.35);
+  }
+  .btn-secondary {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 14px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: border-color 200ms ease, background 200ms ease;
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent-mid);
+    background: var(--accent-light);
+  }
+
+  .hero-proof {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    opacity: 0;
+    animation: enter-up 0.7s var(--ease-out) 0.65s forwards;
+  }
+  .proof-item { text-align: left; }
+  .proof-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .proof-label { font-size: 0.76rem; color: var(--light); margin-top: 3px; letter-spacing: 0.02em; }
+  .proof-divider { width: 1px; background: var(--border); align-self: stretch; }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    height: 100svh;
+    background: var(--off);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-visual-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    opacity: 0;
+    animation: enter-scale 1s var(--ease-out) 0.4s forwards;
+  }
+
+  /* Decorative dental SVG */
+  .tooth-svg {
+    width: 55%;
+    max-width: 300px;
+    opacity: 0.85;
+    filter: drop-shadow(0 20px 60px rgba(26,107,90,0.15));
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* Floating badges on hero */
+  .float-badge {
+    position: absolute;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.82rem;
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .float-badge .badge-icon {
+    width: 32px; height: 32px;
+    background: var(--accent-light);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .badge-1 { top: 18%; left: 8%; animation: badge-float 5s ease-in-out infinite; }
+  .badge-2 { bottom: 22%; right: 6%; animation: badge-float 5s ease-in-out 1s infinite; }
+  .badge-3 { top: 50%; left: 6%; animation: badge-float 5s ease-in-out 2s infinite; }
+  @keyframes badge-float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* ——— SECTIONS ——— */
+  section { padding: 120px 5vw; }
+
+  .section-label {
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .section-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(30px, 4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .section-body {
+    font-size: 1rem;
+    color: var(--mid);
+    max-width: 520px;
+    line-height: 1.75;
+  }
+
+  /* ——— SERVICES ——— */
+  .services-section { background: var(--off); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 56px;
+  }
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 28px 36px;
+    transition: transform 300ms var(--ease-out), box-shadow 300ms ease;
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+  }
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--accent-light);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  .service-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .service-desc { font-size: 0.88rem; color: var(--mid); line-height: 1.65; }
+
+  /* ——— ABOUT / PROCESS ——— */
+  .process-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    margin-top: 64px;
+  }
+  .process-step {
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .step-line {
+    width: 40px; height: 2px;
+    background: var(--accent-mid);
+    border-radius: 2px;
+  }
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .step-body { font-size: 0.9rem; color: var(--mid); line-height: 1.65; }
+
+  /* ——— TESTIMONIALS ——— */
+  .testimonials { background: var(--ink); }
+  .testimonials .section-label { color: rgba(26,107,90,0.9); }
+  .testimonials .section-headline { color: var(--white); }
+  .testimonials .section-body { color: rgba(250,250,249,0.5); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 56px;
+  }
+  .t-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 32px;
+    transition: border-color 300ms ease;
+  }
+  .t-card:hover { border-color: rgba(26,107,90,0.3); }
+  .t-stars { color: #f0b429; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 14px; }
+  .t-text {
+    font-size: 0.97rem;
+    color: rgba(250,250,249,0.8);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .t-author { display: flex; align-items: center; gap: 12px; }
+  .t-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    border: 1px solid rgba(26,107,90,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+  .t-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .t-role { font-size: 0.76rem; color: rgba(250,250,249,0.4); }
+
+  /* HIGHLIGHT QUOTE */
+  .highlight-quote {
+    margin: 48px 0 0;
+    padding: 40px 48px;
+    background: var(--accent);
+    border-radius: 20px;
+    text-align: center;
+  }
+  .highlight-quote p {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.2rem, 2vw, 1.7rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.45;
+    letter-spacing: -0.02em;
+    max-width: 680px;
+    margin: 0 auto 16px;
+  }
+  .highlight-quote cite {
+    font-style: normal;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.04em;
+  }
+
+  /* ——— FINAL CTA ——— */
+  .final-cta {
+    background: var(--off);
+    text-align: center;
+    padding: 120px 5vw;
+  }
+  .cta-box {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .cta-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .cta-sub { font-size: 1rem; color: var(--mid); margin-bottom: 36px; line-height: 1.7; }
+  .cta-risk { margin-top: 16px; font-size: 0.8rem; color: var(--light); }
+
+  /* CONTACT FORM */
+  .contact-form {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 36px;
+    margin-top: 40px;
+    text-align: left;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media(max-width:500px){ .form-grid { grid-template-columns: 1fr; } }
+  .form-field {
+    background: var(--off);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    width: 100%;
+    outline: none;
+    transition: border-color 200ms ease;
+    -webkit-appearance: none;
+  }
+  .form-field:focus { border-color: var(--accent); }
+  .form-field::placeholder { color: var(--light); }
+  select.form-field { cursor: pointer; }
+  .form-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: transform 200ms var(--spring), box-shadow 200ms ease;
+    box-shadow: 0 4px 16px rgba(26,107,90,0.25);
+  }
+  .form-submit:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,107,90,0.35);
+  }
+
+  /* ——— FOOTER ——— */
+  footer {
+    background: var(--ink);
+    padding: 32px 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-copy { font-size: 0.8rem; color: rgba(250,250,249,0.4); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 0.8rem; color: rgba(250,250,249,0.4); text-decoration: none; transition: color 200ms ease; }
+  .footer-links a:hover { color: var(--white); }
+
+  @media(max-width:600px){ footer { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+
+  /* ——— ANIMATIONS ——— */
+  @keyframes enter-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes enter-scale {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  [data-animate] {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+  [data-animate].visible { opacity: 1; transform: none; }
+  [data-animate][data-delay="1"].visible { transition-delay: 0.1s; }
+  [data-animate][data-delay="2"].visible { transition-delay: 0.2s; }
+  [data-animate][data-delay="3"].visible { transition-delay: 0.3s; }
+  [data-animate][data-delay="4"].visible { transition-delay: 0.4s; }
+  [data-animate][data-delay="5"].visible { transition-delay: 0.5s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Apex<span>+</span>Dental</a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#contact">Book Visit</a>
+  </div>
+  <a href="#contact" class="nav-cta">Book Appointment</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-chip">
+      <div class="chip-dot"></div>
+      Now Accepting New Patients · Austin, TX
+    </div>
+
+    <h1 class="hero-headline">
+      Your best<br>smile<br><em>starts here.</em>
+    </h1>
+
+    <p class="hero-sub">
+      Modern dentistry in a calm, judgment-free environment.
+      Cleanings to cosmetics — we make every visit something you don't dread.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Book Your Visit
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="tel:5125550101" class="btn-secondary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.25 12 19.79 19.79 0 011.2 3.42 2 2 0 013.18 1.24h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        (512) 555-0101
+      </a>
+    </div>
+
+    <div class="hero-proof">
+      <div class="proof-item">
+        <div class="proof-num">4.9★</div>
+        <div class="proof-label">Google Rating</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">3,100+</div>
+        <div class="proof-label">Happy Patients</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">Same Day</div>
+        <div class="proof-label">Emergency Care</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-inner">
+      <!-- Tooth SVG -->
+      <svg class="tooth-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 C60 10, 20 40, 20 80 C20 110, 30 130, 40 155 C50 180, 55 220, 70 225 C82 229, 88 200, 100 200 C112 200, 118 229, 130 225 C145 220, 150 180, 160 155 C170 130, 180 110, 180 80 C180 40, 140 10, 100 10Z" fill="#1a6b5a" opacity="0.12"/>
+        <path d="M100 18 C64 18, 28 46, 28 80 C28 108, 38 127, 48 152 C57 175, 62 216, 75 220 C85 223, 90 196, 100 196 C110 196, 115 223, 125 220 C138 216, 143 175, 152 152 C162 127, 172 108, 172 80 C172 46, 136 18, 100 18Z" fill="white" stroke="#e8e6e0" stroke-width="2"/>
+        <!-- Shine -->
+        <ellipse cx="75" cy="55" rx="14" ry="22" fill="white" opacity="0.6" transform="rotate(-20 75 55)"/>
+        <ellipse cx="68" cy="48" rx="5" ry="9" fill="white" opacity="0.9" transform="rotate(-20 68 48)"/>
+        <!-- Accent dot -->
+        <circle cx="130" cy="70" r="4" fill="#1a6b5a" opacity="0.3"/>
+      </svg>
+
+      <!-- Floating badges -->
+      <div class="float-badge badge-1">
+        <div class="badge-icon">✓</div>
+        <div>
+          <div style="font-weight:700;color:#111110;">Pain-Free</div>
+          <div style="font-size:0.72rem;color:#9a9894;">Latest anesthetics</div>
+        </div>
+      </div>
+      <div class="float-badge badge-2">
+        <div class="badge-icon">📅</div>
+        <div>
+          <div style="font-weight:700;color:#111110;">Next-Day Appts</div>
+          <div style="font-size:0.72rem;color:#9a9894;">Usually available</div>
+        </div>
+      </div>
+      <div class="float-badge badge-3">
+        <div class="badge-icon">💳</div>
+        <div>
+          <div style="font-weight:700;color:#111110;">All Insurance</div>
+          <div style="font-size:0.72rem;color:#9a9894;">+ 0% financing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div data-animate>
+    <div class="section-label">What we offer</div>
+    <h2 class="section-headline">Everything your<br>smile needs.</h2>
+    <p class="section-body">From your first cleaning to a complete smile makeover — all under one roof, with one team who knows your history.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card" data-animate data-delay="1">
+      <div class="service-icon">🦷</div>
+      <div class="service-name">Preventive Care</div>
+      <div class="service-desc">Cleanings, X-rays, and exams that catch small problems before they become big ones. Covered by most insurance plans.</div>
+    </div>
+    <div class="service-card" data-animate data-delay="2">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Cosmetic Dentistry</div>
+      <div class="service-desc">Whitening, veneers, bonding, and smile design. Natural-looking results that fit your face — not a cookie-cutter template.</div>
+    </div>
+    <div class="service-card" data-animate data-delay="3">
+      <div class="service-icon">📐</div>
+      <div class="service-name">Invisalign® & Ortho</div>
+      <div class="service-desc">Certified Invisalign provider with in-house monitoring. No awkward metal — just a straighter smile on your timeline.</div>
+    </div>
+    <div class="service-card" data-animate data-delay="4">
+      <div class="service-icon">🔧</div>
+      <div class="service-name">Restorative</div>
+      <div class="service-desc">Crowns, bridges, implants, and tooth-colored fillings. We restore function and appearance in as few visits as possible.</div>
+    </div>
+    <div class="service-card" data-animate data-delay="5">
+      <div class="service-icon">🚨</div>
+      <div class="service-name">Emergency Dental</div>
+      <div class="service-desc">Toothache, broken tooth, lost crown — call us. We reserve same-day slots for urgent care every day we're open.</div>
+    </div>
+    <div class="service-card" data-animate data-delay="2">
+      <div class="service-icon">👨‍👩‍👧</div>
+      <div class="service-name">Family Dentistry</div>
+      <div class="service-desc">We see patients from age 3 to 93. One location, one trusted team for your whole family. Kids actually like coming here.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="about">
+  <div data-animate>
+    <div class="section-label">The experience</div>
+    <h2 class="section-headline">Dentistry that<br>doesn't feel like<br>dentistry.</h2>
+    <p class="section-body">We redesigned the dental visit from the waiting room to checkout. Here's what to expect.</p>
+  </div>
+
+  <div class="process-row">
+    <div class="process-step" data-animate data-delay="1">
+      <div class="step-num">Step 01</div>
+      <div class="step-line"></div>
+      <div class="step-title">Book in Under 60 Seconds</div>
+      <div class="step-body">Online booking, text confirmation, digital paperwork before you arrive. No clipboards. No 10-minute hold music.</div>
+    </div>
+    <div class="process-step" data-animate data-delay="2">
+      <div class="step-num">Step 02</div>
+      <div class="step-line"></div>
+      <div class="step-title">A Calm, Modern Space</div>
+      <div class="step-body">Private rooms, noise-canceling headphones, Netflix overhead. We designed this place to make dental anxiety a thing of the past.</div>
+    </div>
+    <div class="process-step" data-animate data-delay="3">
+      <div class="step-num">Step 03</div>
+      <div class="step-line"></div>
+      <div class="step-title">Clear Treatment Plans</div>
+      <div class="step-body">Dr. Nguyen shows you exactly what's happening — on your X-rays, in plain English. No surprise upsells. No pressure.</div>
+    </div>
+    <div class="process-step" data-animate data-delay="4">
+      <div class="step-num">Step 04</div>
+      <div class="step-line"></div>
+      <div class="step-title">Easy Insurance & Billing</div>
+      <div class="step-body">We verify your benefits before your appointment and handle all claim submission. You see your out-of-pocket cost upfront.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div data-animate>
+    <div class="section-label">Real patients</div>
+    <h2 class="section-headline">They used to<br>avoid the dentist too.</h2>
+    <p class="section-body" style="color:rgba(250,250,249,0.5);">3,100+ patients. Here's what a few of them said.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="t-card" data-animate data-delay="1">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"I hadn't been to a dentist in 8 years because of anxiety. Apex was recommended by a friend and I finally went. Zero judgment, incredible team. I have a regular cleaning every 6 months now. It changed my life."</p>
+      <div class="t-author">
+        <div class="t-avatar">JM</div>
+        <div>
+          <div class="t-name">Jessica M.</div>
+          <div class="t-role">South Austin</div>
+        </div>
+      </div>
+    </div>
+    <div class="t-card" data-animate data-delay="2">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Got Invisalign through Apex and the whole process was so smooth. Dr. Nguyen checked in regularly and the results after 14 months — honestly I can't stop smiling. Worth every penny."</p>
+      <div class="t-author">
+        <div class="t-avatar">RK</div>
+        <div>
+          <div class="t-name">Raj K.</div>
+          <div class="t-role">Domain Area</div>
+        </div>
+      </div>
+    </div>
+    <div class="t-card" data-animate data-delay="3">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Brought my whole family here — 2 adults, 3 kids. They are GREAT with kids. My 7-year-old actually asked when her next appointment was. That has literally never happened before."</p>
+      <div class="t-author">
+        <div class="t-avatar">CH</div>
+        <div>
+          <div class="t-name">Claire H.</div>
+          <div class="t-role">Cedar Park</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-quote" data-animate data-delay="2">
+    <p>"I drove 40 minutes past 12 other dental offices to come here. That's how good they are."</p>
+    <cite>— DAVID T., PATIENT SINCE 2021</cite>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contact">
+  <div class="cta-box">
+    <div class="section-label" data-animate>Book your visit</div>
+    <h2 class="cta-headline" data-animate data-delay="1">Ready for a smile<br>you're proud of?</h2>
+    <p class="cta-sub" data-animate data-delay="2">New patients welcome. Most insurance accepted. Appointments usually available within 48 hours.</p>
+
+    <div class="contact-form" data-animate data-delay="3">
+      <div class="form-grid">
+        <input class="form-field" type="text" placeholder="First name" />
+        <input class="form-field" type="text" placeholder="Last name" />
+        <input class="form-field" type="tel" placeholder="Phone number" />
+        <input class="form-field" type="email" placeholder="Email address" />
+      </div>
+      <select class="form-field" style="margin-bottom:12px; width:100%;">
+        <option value="" disabled selected>What do you need? (optional)</option>
+        <option>New Patient Exam & Cleaning</option>
+        <option>Cosmetic Consultation</option>
+        <option>Invisalign Consultation</option>
+        <option>Emergency — I'm in pain now</option>
+        <option>Other / Not sure</option>
+      </select>
+      <button class="form-submit">Book My Appointment →</button>
+    </div>
+
+    <p class="cta-risk" data-animate data-delay="4">Or call us directly: <strong>(512) 555-0101</strong> · Mon–Fri 8am–5pm · Sat 9am–2pm</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Apex<span>+</span>Dental</a>
+  <span class="footer-copy">© 2026 Apex Dental Group · 2400 S Lamar Blvd, Austin TX 78704</span>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Accessibility</a>
+    <a href="tel:5125550101">(512) 555-0101</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
+  );
+  document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+</script>
+</body>
+</html>
