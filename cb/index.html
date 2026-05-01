@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+    <title>CB — Built For The Driver. Not Dispatch.</title>
+    <meta name="description" content="Built for the driver. Not the carrier, not the broker, not dispatch.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808;
+            --card: #121212;
+            --line: #1f1f1f;
+            --lime: #C8F230;
+            --lime-dim: #8FA820;
+            --white: #FFFFFF;
+            --off: #F2F2EE;
+            --mute: #7A7A7A;
+            --display: 'Syne', Arial, sans-serif;
+            --body: 'Inter', system-ui, sans-serif;
+            --mono: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--off);
+            font-family: var(--body);
+            line-height: 1.55;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: repeating-linear-gradient(45deg, transparent 0px, transparent 2px, rgba(200, 242, 48, 0.012) 2px, rgba(200, 242, 48, 0.012) 3px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .wrap { max-width: 640px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 2; }
+        .brand { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+        .handle { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--mute); text-transform: uppercase; }
+        .handle span { color: var(--lime); }
+        .cb-tag { font-family: var(--mono); font-size: 10px; color: var(--mute); letter-spacing: 0.12em; }
+        .hero { margin-bottom: 56px; position: relative; }
+        .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; color: var(--lime); text-transform: uppercase; margin-bottom: 20px; display: inline-block; padding: 6px 10px; border: 1px solid var(--lime); background: rgba(200, 242, 48, 0.04); }
+        h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 8vw, 52px); line-height: 0.98; letter-spacing: -0.02em; color: var(--white); margin-bottom: 24px; }
+        h1 .accent { color: var(--lime); display: block; }
+        .lede { font-size: 17px; color: var(--off); line-height: 1.5; max-width: 520px; }
+        .lede strong { color: var(--white); font-weight: 600; }
+        .cb-says { border-left: 3px solid var(--lime); padding: 20px 0 20px 22px; margin: 40px 0; font-family: var(--display); font-weight: 600; font-size: 19px; line-height: 1.4; color: var(--white); letter-spacing: -0.01em; }
+        .cb-says::before { content: 'CB:'; display: block; font-family: var(--mono); font-size: 10px; font-weight: 400; letter-spacing: 0.2em; color: var(--lime); margin-bottom: 8px; }
+        section { margin-bottom: 48px; }
+        .sec-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--mute); margin-bottom: 8px; }
+        h2 { font-family: var(--display); font-weight: 700; font-size: clamp(22px, 5vw, 28px); color: var(--white); letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 18px; }
+        h2 .accent { color: var(--lime); }
+        .does-list { list-style: none; border-top: 1px solid var(--line); }
+        .does-list li { padding: 18px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 28px 1fr; gap: 14px; align-items: start; }
+        .does-list .num { font-family: var(--mono); font-size: 11px; color: var(--lime); letter-spacing: 0.1em; padding-top: 2px; }
+        .does-list .body strong { display: block; color: var(--white); font-family: var(--display); font-weight: 700; font-size: 16px; margin-bottom: 4px; letter-spacing: -0.005em; }
+        .does-list .body span { color: var(--off); font-size: 15px; line-height: 1.45; }
+        .questions { background: var(--card); border: 1px solid var(--line); padding: 28px 24px; position: relative; }
+        .questions::before { content: ''; position: absolute; top: -1px; left: -1px; width: 40px; height: 3px; background: var(--lime); }
+        .questions h2 { margin-bottom: 8px; }
+        .questions .sub { color: var(--mute); font-size: 13px; margin-bottom: 24px; font-family: var(--mono); letter-spacing: 0.05em; }
+        .q-list { list-style: none; counter-reset: q; }
+        .q-list > li { counter-increment: q; padding: 22px 0; border-bottom: 1px dashed var(--line); }
+        .q-list > li:last-child { border-bottom: none; }
+        .q-head { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+        .q-head::before {
+            content: counter(q, decimal-leading-zero);
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--lime);
+            letter-spacing: 0.05em;
+        }
+        .q-text { color: var(--white); font-size: 16px; font-weight: 500; line-height: 1.4; }
+        .examples {
+            margin-left: 44px;
+            padding: 12px 14px;
+            background: rgba(200, 242, 48, 0.04);
+            border-left: 2px solid var(--lime-dim);
+            font-size: 13px;
+            color: var(--mute);
+            font-family: var(--mono);
+            letter-spacing: 0.02em;
+            line-height: 1.6;
+        }
+        .examples .ex-label {
+            display: block;
+            color: var(--lime);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .examples .ex-item { display: block; margin-bottom: 4px; }
+        .examples .ex-item:last-child { margin-bottom: 0; }
+        .examples .ex-item::before { content: '· '; color: var(--lime); }
+        .cta-block { margin-top: 36px; padding: 28px 24px; background: var(--lime); color: var(--bg); position: relative; }
+        .cta-block::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--bg); pointer-events: none; }
+        .cta-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--bg); margin-bottom: 12px; font-weight: 600; }
+        .cta-block h3 { font-family: var(--display); font-weight: 800; font-size: 22px; color: var(--bg); line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.01em; }
+        .cta-block p { color: var(--bg); font-size: 14px; line-height: 1.5; margin-bottom: 18px; font-weight: 500; }
+        .cta-btn { display: block; width: 100%; padding: 16px; background: var(--bg); color: var(--lime); text-align: center; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; border: none; cursor: pointer; transition: transform 0.15s ease; }
+        .cta-btn:active { transform: scale(0.98); }
+        .cta-btn .arrow { display: inline-block; margin-left: 8px; transition: transform 0.2s ease; }
+        .cta-btn:hover .arrow { transform: translateX(4px); }
+        .fine { font-family: var(--mono); font-size: 10px; color: var(--bg); margin-top: 14px; letter-spacing: 0.05em; opacity: 0.7; text-align: center; }
+        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--mute); letter-spacing: 0.08em; line-height: 1.7; }
+        footer .lime { color: var(--lime); }
+
+        @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: no-preference) {
+            .hero, section, footer { animation: rise 0.6s ease-out backwards; }
+            .hero { animation-delay: 0.05s; }
+            section:nth-of-type(1) { animation-delay: 0.15s; }
+            section:nth-of-type(2) { animation-delay: 0.25s; }
+            footer { animation-delay: 0.35s; }
+        }
+
+        @media (max-width: 480px) {
+            .wrap { padding: 24px 18px 60px; }
+            .does-list li { padding: 16px 0; }
+            .questions { padding: 24px 18px; }
+            .cta-block { padding: 24px 18px; }
+            .examples { margin-left: 0; margin-top: 10px; }
+            .q-head { grid-template-columns: 28px 1fr; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <header class="brand">
+        <div class="handle"><span>CB</span> · CHANNEL 19</div>
+        <div class="cb-tag">PRE-LAUNCH</div>
+    </header>
+
+    <section class="hero">
+        <span class="eyebrow">For the man or woman behind the wheel</span>
+        <h1>Built for the driver. <span class="accent">Not dispatch.</span></h1>
+        <p class="lede">You move this country. You miss birthdays, anniversaries, and ordinary Tuesday dinners. The least anybody owes you is <strong>the money you actually earned</strong> — and a tool that doesn't talk to you like a corporate trainer.</p>
+        <div class="cb-says">I ain't dispatch. I ain't the broker. I ain't the boss. I work for the seat. That's it.</div>
+    </section>
+
+    <section>
+        <div class="sec-num">01 · WHAT I DO</div>
+        <h2>Help you keep <span class="accent">what you already earned.</span></h2>
+        <ul class="does-list">
+            <li><div class="num">→</div><div class="body"><strong>Detention pay you're owed.</strong><span>Sitting at a dock past your free time? Text me. I time it, document it, and track if they actually paid up.</span></div></li>
+            <li><div class="num">→</div><div class="body"><strong>Money decisions before you say yes.</strong><span>"Is this load worth the hours?" I'll show you the math on what those hours actually cost you. No guessing.</span></div></li>
+            <li><div class="num">→</div><div class="body"><strong>Your record. Your data. Yours.</strong><span>Every load and every dollar recovered is logged in your name. You leave a carrier, you take your data with you.</span></div></li>
+        </ul>
+    </section>
+
+    <section>
+        <div class="sec-num">02 · WHAT I'M ASKING</div>
+        <h2>Three questions. Answer however you <span class="accent">want.</span></h2>
+        <div class="questions">
+            <p class="sub">// No forms. No app. Reply like you're on the radio.</p>
+            <ol class="q-list">
+                <li>
+                    <div class="q-head"><div class="q-text">What's the one recurring bullshit factor in your week that drains your wallet through no fault of your own — the kind of dead-money drain that dispatch or brokers always seem to "overlook"?</div></div>
+                    <div class="examples">
+                        <span class="ex-label">FOR EXAMPLE</span>
+                        <span class="ex-item">Unpaid detention you're tired of begging for</span>
+                        <span class="ex-item">The "quick run" that eats 6 hours of your clock for nothing</span>
+                        <span class="ex-item">Missing BOLs that turn into "no pay" disputes</span>
+                        <span class="ex-item">IRS per diem you're too busy to track</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="q-head"><div class="q-text">Last time you got stuck at a dock past your free time — did you get paid for it? If not, what got in the way?</div></div>
+                    <div class="examples">
+                        <span class="ex-label">FOR EXAMPLE</span>
+                        <span class="ex-item">"Shipper denied it" (and you had no proof)</span>
+                        <span class="ex-item">Dispatch said they'd handle it and went dark</span>
+                        <span class="ex-item">Wasn't worth the 45-minute phone argument for $50</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="q-head"><div class="q-text">If something like me actually worked — what would have to be true for you to tell another driver about it?</div></div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="cta-block">
+            <div class="cta-label">► HOW TO SEND IT</div>
+            <h3>Hit the button. Talk soon.</h3>
+            <p>The button below opens your messages with the questions ready. Answer how you'd answer at a truck stop. Two minutes, tops.</p>
+            <button class="cta-btn" onclick="window.location.href='sms:?body=CB%20Intel%3A%0A%0A1.%20The%20weekly%20bullshit%20drain%20is%3A%0A%0A2.%20Last%20detention%20denial%20reason%3A%0A%0A3.%20To%20tell%20a%20friend%2C%20it%27d%20have%20to%3A'">
+                Open Messages <span class="arrow">→</span>
+            </button>
+            <div class="fine">No forms · No app · No account · No login</div>
+        </div>
+    </section>
+
+    <footer>
+        PASS THIS ON · ANY DRIVER YOU TRUST<br>
+        <span class="lime">CB</span> · BUILT BY A DRIVER'S CORNER · <span class="lime">PRE-LAUNCH FIELD TEST</span>
+    </footer>
+</div>
+</body>
+</html>
