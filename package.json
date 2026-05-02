@@ -1,0 +1,23 @@
+{
+  "name": "velocity-pages-demo",
+  "version": "1.0.0",
+  "description": "Live spec pages for client proposals. - `/` — Summit Roofing (dark/premium) - `/dental` — Apex Dental (light/clean)",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"No tests specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IncludeBrake/velocity-pages-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IncludeBrake/velocity-pages-demo/issues"
+  },
+  "homepage": "https://github.com/IncludeBrake/velocity-pages-demo#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
